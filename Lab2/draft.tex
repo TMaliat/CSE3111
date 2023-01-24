@@ -58,7 +58,7 @@ Here we will include the solve for the problem statement of checking if a number
 \newpage
 \subsection{Checking Prime Number Requested By The Client - Server Side }
 This part contains the logical part to check whether a given number is prime or not along with the PrintStream object to send it over to the client side so that the client will see whether their given integer is a prime or not.
-\\lstinputlisting[language=java]{Server.java}
+
 
 \begin{minted}{java}
 import java.io.*;
@@ -116,7 +116,7 @@ class Server {
 \subsection{Checking The Prime Number Requested By The Client - Client Side}
 Here our client side will establish a connection with the server. The client will send over an integer to check whether it is prime or not.  Then the logical part of the server side will output stream the result to the client and the statement will be shown over the client side
 
-\\lstinputlisting[language=java]{Client.java}
+
 \begin{minted}{java}
 import java.io.*;
 import java.net.*;
@@ -157,7 +157,7 @@ class Client {
 Here we will include the solve for the problem statement of small letter to capital conversion for a line of text given during the lab experiment.
 \subsection{Letter Case Conversion Requested By The Client - Server Side }
 This section will show the part where the text received from the client side will be converted to capital letter along with small letter as an added line of code.
-\\lstinputlisting[language=java]{Server2.java}
+
 \begin{minted}{java}
 import java.io.*;
 import java.net.*;
@@ -204,7 +204,7 @@ class Server2 {
 
 \subsection{Letter Case Conversion Requested By The Client - Client Side}
 Here our client side will send over a text to the server & the output will be shown to the server both in all capital letters & smaller letters. 
-\\lstinputlisting[language=java]{Client2.java}
+
 \begin{minted}{java}
 import java.io.*;
 import java.net.*;
@@ -246,7 +246,7 @@ class Client2 {
 Here we will include the solve for the problem statement of design and implementation a non-idempotent operation using exactly-once semantics that can handle failure of request messages, failure of response messages and process execution failures.given during the lab experiment.
 \subsection{Handling Message Failure  Requested By The Client - Server Side }
 This part will handle the registration of the user/client list. It will also control the balance, credit & debit part of one's transaction. A random number will be generated whose threshold above 70 will signal the failure of the data packet. This part can be enhanced using the graph. 
-\\lstinputlisting[language=java]{Server3.java}
+
 \begin{minted}{java}
 import java.net.*;
 import java.io.*;
@@ -445,7 +445,7 @@ public class Server3 {
 
 \subsection{Handling Message Failure Requested By The Client - Client Side}
 This part will handle the part of the registered clients login authentication . The logical part will ensure proper choice selection is used.
-\\lstinputlisting[language=java]{Client3.java}
+
 \begin{minted}{java}
 import java.io.*;
 import java.lang.Math;
@@ -609,6 +609,7 @@ public class Client3 {
 }
 
 \end{minted}
+\newpage
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{message1.png}
@@ -630,6 +631,7 @@ public class Client3 {
 \includegraphics[width=\textwidth]{message4.png}
 \caption{Client Side For Handling Message Failure}
 \end{figure}
+\newpage
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{message5.png}
@@ -642,7 +644,7 @@ public class Client3 {
 \end{figure}
 
 
-
+\newpage
 \newpage
 \section{Experience}
 \begin{enumerate}
