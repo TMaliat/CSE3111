@@ -1,5 +1,6 @@
 \documentclass[11pt]{article}
 \usepackage{listings}
+\usepackage{minted}
 \usepackage{graphicx}
 \usepackage{url}
 
@@ -57,7 +58,53 @@ Here we will include the solve for the problem statement of checking if a number
 \newpage
 \subsection{Checking Prime Number Requested By The Client - Server Side }
 This part contains the logical part to check whether a given number is prime or not along with the PrintStream object to send it over to the client side so that the client will see whether their given integer is a prime or not.
-\lstinputlisting[language=java]{Server.java}
+\\lstinputlisting[language=java]{Server.java}
+
+\begin{minted}{java}
+import java.io.*;
+import java.net.*;
+
+class Server {
+
+	public static void main(String args[])
+		throws Exception
+	{
+		ServerSocket ss = new ServerSocket(5000);
+		Socket s = ss.accept();
+		System.out.println("Connection established");
+		PrintStream ps= new PrintStream(s.getOutputStream());
+		BufferedReader br= new BufferedReader
+		(new InputStreamReader(s.getInputStream()));
+		BufferedReader kb= new BufferedReader
+		(new InputStreamReader(System.in));
+		while (true) {
+			System.out.println("Prime check");
+			String str;
+			while ((str = br.readLine()) != "Over") {
+				int num=Integer.parseInt(str);
+				boolean flag = false;
+				int i=2;System.out.println("Checking");
+				while (i <= num / 2) {
+					if (num % i == 0) {
+						flag = true;
+						break;
+					}++i;
+				}
+
+				if (!flag) ps.println("Prime Number");
+				else ps.println("Not Prime Number");	
+			}
+			ps.close();
+			br.close();
+			kb.close();
+			ss.close();
+			s.close();
+			System.exit(0);
+		} 
+	}
+}
+
+\end{minted}
 
 \begin{figure}[!h]
 \centering
@@ -69,7 +116,36 @@ This part contains the logical part to check whether a given number is prime or 
 \subsection{Checking The Prime Number Requested By The Client - Client Side}
 Here our client side will establish a connection with the server. The client will send over an integer to check whether it is prime or not.  Then the logical part of the server side will output stream the result to the client and the statement will be shown over the client side
 
-\lstinputlisting[language=java]{Client.java}
+\\lstinputlisting[language=java]{Client.java}
+\begin{minted}{java}
+import java.io.*;
+import java.net.*;
+
+class Client {
+
+    public static void main(String args[])
+            throws Exception
+    {
+        Socket s = new Socket("localhost", 5000);
+        DataOutputStream dos= new DataOutputStream
+        (s.getOutputStream());
+        BufferedReader br= new BufferedReader
+        (new InputStreamReader(s.getInputStream()));
+        BufferedReader kb= new BufferedReader
+        (new InputStreamReader(System.in));
+        String str, str1;
+        while (!(str = kb.readLine()).equals("exit")) {
+            dos.writeBytes(str + "\n");
+            str1 = br.readLine();
+            System.out.println(str1);
+        }
+        dos.close();
+        br.close();
+        kb.close();
+        s.close();
+    }
+}
+\end{minted}
 
 \begin{figure}[!h]
 \centering
@@ -81,7 +157,43 @@ Here our client side will establish a connection with the server. The client wil
 Here we will include the solve for the problem statement of small letter to capital conversion for a line of text given during the lab experiment.
 \subsection{Letter Case Conversion Requested By The Client - Server Side }
 This section will show the part where the text received from the client side will be converted to capital letter along with small letter as an added line of code.
-\lstinputlisting[language=java]{Server2.java}
+\\lstinputlisting[language=java]{Server2.java}
+\begin{minted}{java}
+import java.io.*;
+import java.net.*;
+
+class Server2 {
+
+	public static void main(String args[])
+		throws Exception
+	{
+		ServerSocket ss = new ServerSocket(5000);
+		Socket s = ss.accept();
+		System.out.println("Connection established");
+		PrintStream ps= new PrintStream(s.getOutputStream());
+		BufferedReader br= new BufferedReader
+		(new InputStreamReader(s.getInputStream()));
+		BufferedReader kb= new BufferedReader
+		(new InputStreamReader(System.in));
+		while (true) {
+			String str, str1;
+			while ((str = br.readLine()) != null) {
+				System.out.println(str.toLowerCase());
+				System.out.println(str.toUpperCase());
+				str1 = kb.readLine();
+				ps.println(str1);
+			}
+			ps.close();
+			br.close();
+			kb.close();
+			ss.close();
+			s.close();
+			System.exit(0);
+		} 
+	}
+}
+
+\end{minted}
 
 \begin{figure}[!h]
 \centering
@@ -92,7 +204,37 @@ This section will show the part where the text received from the client side wil
 
 \subsection{Letter Case Conversion Requested By The Client - Client Side}
 Here our client side will send over a text to the server & the output will be shown to the server both in all capital letters & smaller letters. 
-\lstinputlisting[language=java]{Client2.java}
+\\lstinputlisting[language=java]{Client2.java}
+\begin{minted}{java}
+import java.io.*;
+import java.net.*;
+
+class Client2 {
+
+    public static void main(String args[])
+            throws Exception
+    {
+        Socket s = new Socket("localhost", 5000);
+        DataOutputStream dos= new DataOutputStream
+        (s.getOutputStream());
+        BufferedReader br= new BufferedReader
+        (new InputStreamReader(s.getInputStream()));
+        BufferedReader kb= new BufferedReader
+        (new InputStreamReader(System.in));
+        String str, str1;
+        while (!(str = kb.readLine()).equals("exit")) {
+            dos.writeBytes(str + "\n");
+            str1 = br.readLine();
+
+            System.out.println(str1);
+        }
+        dos.close();
+        br.close();
+        kb.close();
+        s.close();
+    }
+}
+\end{minted}
 
 \begin{figure}[!h]
 \centering
@@ -104,8 +246,196 @@ Here our client side will send over a text to the server & the output will be sh
 Here we will include the solve for the problem statement of design and implementation a non-idempotent operation using exactly-once semantics that can handle failure of request messages, failure of response messages and process execution failures.given during the lab experiment.
 \subsection{Handling Message Failure  Requested By The Client - Server Side }
 This part will handle the registration of the user/client list. It will also control the balance, credit & debit part of one's transaction. A random number will be generated whose threshold above 70 will signal the failure of the data packet. This part can be enhanced using the graph. 
-\lstinputlisting[language=java]{Server3.java}
+\\lstinputlisting[language=java]{Server3.java}
+\begin{minted}{java}
+import java.net.*;
+import java.io.*;
 
+public class Server3 {
+    String user;
+    String password;
+    int balance;
+    int req_id;
+
+    Server3(String user, String password, int balance) {
+        this.user = user;
+        this.password = password;
+        this.balance = balance;
+    }
+
+    public void setBalance(int newBalance) {
+        this.balance = newBalance;
+    }
+
+    public int getBalance() {
+        return this.balance;
+    }
+
+    public int getReq_id() {
+        return this.req_id;
+    }
+
+    public void setReq_id() {
+        this.req_id = getReq_id() + 1;
+    }
+
+    public String checkBalance() {
+        return "Your current balance is: " + getBalance() + " taka";
+    }
+
+    public void credit(int value) {
+        setBalance(getBalance() + value);
+    }
+
+    public boolean debit(int value) {
+        if (getBalance() >= value) {
+            setBalance(getBalance() - value);
+            return true;
+        } else
+            return false;
+    }
+
+    public static void main(String args[]) throws IOException {
+        int userNo = -1;
+
+        Server3[] users;
+
+        users = new Server3[3];
+
+        users[0] = new Server3("Ornila", "442023", 50000);
+        users[1] = new Server3("Shamsi", "231020", 60000);
+        users[2] = new Server3("Ohona", "492023", 40000);
+
+        System.out.println("Starting the server!");
+        System.out.println("Waiting for Clients...");
+        ServerSocket serverSocket = new ServerSocket(5000);
+
+        Socket socket = serverSocket.accept();
+        System.out.println("Client Accepted!");
+        ObjectInputStream ois = new ObjectInputStream
+        (socket.getInputStream());
+        ObjectOutputStream oos = new ObjectOutputStream
+        (socket.getOutputStream());
+
+        try {
+            Object cMsg1 = ois.readObject();
+            Object cMsg2 = ois.readObject();
+
+            String Name = (String) cMsg1;
+            String Pass = (String) cMsg2;
+
+            for (int i = 0; i < 3; i++) {
+                if (Name.equals(users[i].user) && 
+                Pass.equals(users[i].password)) {
+                    oos.writeObject(true);
+                    userNo = i;
+                    break;
+                } else
+                    oos.writeObject(false);
+            }
+            while (true) {
+                Object cMsg3 = ois.readObject();
+                String command = (String) cMsg3;
+
+
+                if (userNo >= 0) {
+                    if (command.equals("c")) {
+
+                        while (true) {
+                            if (error() == true)
+                                break;
+                        }
+
+                        oos.writeObject(
+                            "Enter amount to be credited:\n");
+
+                        Object cMsg4 = ois.readObject();
+                        int value = (int) cMsg4;
+
+                        users[userNo].credit(value);
+
+                        while (true) {
+                            if (error() == true)
+                                break;
+                        }
+
+                        oos.writeObject(
+                            "Your account has been credited by " 
+                            + value + " taka\n"+ 
+                            users[userNo].checkBalance());
+
+                    } else if (command.equals("d")) {
+
+                        while (true) {
+                            if (error() == true)
+                                break;
+                        }
+
+                        oos.writeObject(
+                            "Enter amount to be debited:\n");
+
+                        Object cMsg4 = ois.readObject();
+                        int value = (int) cMsg4;
+
+                        while (true) {
+                            if (error() == true)
+                                break;
+                        }
+
+                        if (users[userNo].debit(value) == true)
+                            oos.writeObject(
+                                "Your account has been debited by " 
+                                + value + " taka\n"+ users[userNo].checkBalance());
+                        else
+                            oos.writeObject("Insufficient Balance\n" 
+                            + users[userNo].checkBalance());
+                    } else if (command.equals("q")) {
+                        while (true) {
+                            if (error() == true)
+                                break;
+                        }
+
+                        oos.writeObject("Logged Out Successfully...\n");
+
+                        System.out.println("System shutting down...\n");
+
+                        break;
+                    } else if (command.equals("b")) {
+
+                        while (true) {
+                            if (error() == true)
+                                break;
+                        }
+
+                        oos.writeObject(users[userNo].checkBalance());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    static boolean error() {
+
+        int num = (int) Math.floor(Math.random() * (100));
+
+        // int num = (int) Math.random() * 100;
+
+        // System.out.println(num);
+
+        if (num < 70) {
+            System.out.println(
+                "\nData packets sent successfully to the Client...\n");
+            return true;
+        } else {
+            System.out.println(
+                "\nData packets not sent to the Client\nResending packets...\n");
+            return false;
+        }
+    }
+}
+\end{minted}
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{message_server.png}
@@ -115,8 +445,170 @@ This part will handle the registration of the user/client list. It will also con
 
 \subsection{Handling Message Failure Requested By The Client - Client Side}
 This part will handle the part of the registered clients login authentication . The logical part will ensure proper choice selection is used.
-\lstinputlisting[language=java]{Client3.java}
+\\lstinputlisting[language=java]{Client3.java}
+\begin{minted}{java}
+import java.io.*;
+import java.lang.Math;
+import java.net.Socket;
+import java.util.*;;
 
+public class Client3 {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        delay();
+        System.out.println("Client Started...");
+
+        Socket socket = new Socket("localhost", 5000);
+
+        Scanner scanner = new Scanner(System.in);
+        delay();
+        System.out.println("Client Connected to the server...");
+        delay();
+        System.out.println("Enter your username:");
+        String name = scanner.nextLine();
+        delay();
+        System.out.println("Enter your password:");
+        String pass = scanner.nextLine();
+
+        ObjectOutputStream objectOutputStream = 
+        new ObjectOutputStream(socket.getOutputStream());
+        ObjectInputStream objectInputStream = 
+        new ObjectInputStream(socket.getInputStream());
+
+        objectOutputStream.writeObject(name);
+        objectOutputStream.writeObject(pass);
+
+        Object fromServer1 = objectInputStream.readObject();
+
+        if ((boolean) fromServer1 == true) {
+            delay();
+            System.out.println("\nLogin Successful...");
+
+            String str;
+            int val;
+
+            while (true) {
+
+                delay();
+
+                System.out.println(
+                    "\nChoose Option please:\n");
+                System.out.println(
+                    "1. Press b to check balance");
+                System.out.println(
+                    "2. Press c to Credit balance");
+                System.out.println(
+                    "3. Press d to Debit balance");
+                System.out.println(
+                    "4. Press q to Log Out\n");
+
+                str = scanner.nextLine();
+                objectOutputStream.writeObject(str);
+
+                sendPackets();
+
+                if (str.equals("q")) {
+                    delay();
+                    Object fromServer = 
+                    objectInputStream.readObject();
+                    System.out.println("\n" + fromServer);
+
+                    break;
+                }
+                try {
+                    delay();
+                    Object fromServer = 
+                    objectInputStream.readObject();
+                    System.out.println("\n" + fromServer);
+
+                    if (str.equals("c") 
+                    || str.equals("d")) {
+
+                        val = scanner.nextInt();
+                        scanner.nextLine();
+
+                        int loop = req_error();
+
+                        objectOutputStream.writeObject(loop);
+
+                        for (int i = 0; i < loop; i++) {
+
+                            String time = "";
+
+                            if (i == 0)
+                                time = "once...";
+                            else if (i == 1)
+                                time = "twice...";
+
+                            System.out.println(
+                                "\nSending data packets " + time);
+                            delay();
+
+                            objectOutputStream.writeObject(val);
+
+                            sendPackets();
+                        }
+                        try {
+                            Object fromServer2 =
+                             objectInputStream.readObject();
+                            delay();
+                            System.out.println("\n" + fromServer2);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        else {
+            delay();
+            System.out.println("Login Failed! Try again...");
+            System.exit(0);
+        }
+    }
+
+    static int req_error() {
+        return (int) Math.floor(Math.random() * (2)) + 1;
+    }
+
+    static boolean error() {
+
+        int num = (int) Math.floor(Math.random() * (100));
+
+        if (num < 70) {
+            delay();
+            System.out.println(
+                "\nData packets sent successfully to the Server...\n");
+            return true;
+        } else {
+            delay();
+            System.out.println(
+                "\nData packets failed to be sent to the server\nResending packets...\n");
+            return false;
+        }
+    }
+
+    static void sendPackets() {
+        while (true) {
+            if (error() == true)
+                break;
+        }
+    }
+
+    static void delay() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+
+\end{minted}
 \begin{figure}[!h]
 \centering
 \includegraphics[width=\textwidth]{message1.png}
