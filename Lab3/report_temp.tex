@@ -1,0 +1,83 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx}
+\usepackage{url}
+
+\begin{document}
+
+\begin{titlepage}
+	\begin{center}
+    	\includegraphics[scale=0.10]{du.png}\par
+		\begin{Huge}
+			\textsc{University of Dhaka}\par
+		\end{Huge}
+		\begin{Large}
+			Department of Computer Science and Engineering\par \vspace{1cm}
+			CSE-3111 : Computer Networking Lab \\[12pt]	
+			Lab Report 3 : Implementing File transfer using Socket Programming and HTTP GET/POST requests
+		\end{Large}
+	\end{center}  	
+	\begin{large}
+		\textbf{Submitted By:\\[12pt]}
+			Name : Asfin Jannat Shamsi\\[8pt]
+			Roll No : 23\\[12pt]
+			Name : Tanzeem Maliat\\[8pt]
+			Roll No : 51\\[12pt]
+		\textbf{Submitted On : \\[12pt]}
+			January 31, 2023\\[20pt]
+		\textbf{Submitted To :\\[12pt]}
+			Dr. Md. Abdur Razzaque\\[12pt]
+                Md Mahmudur Rahman\\[12pt]
+                Md. Ashraful Islam\\[12pt]
+                Md. Fahim Arefin
+	\end{large}
+\end{titlepage}
+
+\section{Introduction}
+Using the Socket Programming and the GET & POST methods from HTTP , client and server can have two way communication and send over or receive files over the connection.
+\item 
+\item 
+\item 
+
+\subsection{Objectives}
+The objective of this lab is to give hands-on experience with socket programming and HTTP file transfer. 
+\begin{itemize}
+    \item implementing multi-threaded chat from many clients to one server 
+    \item setting up an HTTP server process with a few objects
+    \item using GET and POST methods to upload and download objects in between HTTP clients and a server
+\end{itemize}
+%%%%
+%%%%
+
+\section{File Transfer via Socket Programming}
+
+\subsection{Server}
+In the server side, we turn on the socket and wait for the client to connect. Using the connection, the client can request a file and send a file to the server. If the file does not exist, an error message is shown.
+
+\subsection{Client}
+In the client side, we connect to the server. Using the connection, the server can request a file and send a file to the client. If the file does not exist, an error message is shown. 
+
+
+\section{File Transfer via GET/POST methods}
+
+\subsection{Server}
+In the server side, we turn on the socket and wait for the client to connect. Using the connection, the client can request a file and send a file to the server. If the file does not exist, an error message is shown.
+
+\subsection{Client}
+In the client side, we connect to the server. Using the connection, the server can request a file and send a file to the client. If the file does not exist, an error message is shown. 
+
+
+\newpage
+\section{Experience}
+\begin{enumerate}
+\item We had to see some examples of how to use HttpServer package in Java
+\item We used Socket Programming to transfer files
+\end{enumerate}
+
+\begin{thebibliography}{1}
+\bibitem{book}  Computer networking : a top-down approach 6th ed.
+\bibitem{StackOverflow} StackOverflow : \url{http://stackoverflow.com/}
+\bibitem{W3School} HTML Codes : \url{http://www.w3schools.com/}
+\end{thebibliography}
+
+\end{document}
